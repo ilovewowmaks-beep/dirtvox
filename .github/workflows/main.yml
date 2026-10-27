@@ -1,0 +1,18 @@
+name: Build Dirt Vox
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -B build -S dirtvox -A x64
+      - name: Build
+        run: cmake --build build --config Release --parallel
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: DirtVox-VST3-Windows
+          path: build/DirtVox_artefacts/Release/VST3/
